@@ -46,10 +46,9 @@ class MainActivityInstrumentedTest {
 
     @Test
     fun shouldShowSecondCorrectAsGreen() {
-        val viewModel = activityRule.activity.viewModel
-        viewModel.answer = listOf('a', 'b', 'c')
-        viewModel.guess('a')
-        viewModel.guess('b')
+        activityRule.activity.viewModel.answer = listOf('a', 'b', 'c')
+        onView(withId(R.id.button_a)).perform(click())
+        onView(withId(R.id.button_b)).perform(click())
         onView(withId(R.id.led_3)).check { view, _ ->
             assertColor(view, R.color.green)
         }
@@ -57,10 +56,9 @@ class MainActivityInstrumentedTest {
 
     @Test
     fun shouldShowSecondExistingAsOrange() {
-        val viewModel = activityRule.activity.viewModel
-        viewModel.answer = listOf('a', 'b', 'b')
-        viewModel.guess('b')
-        viewModel.guess('a')
+        activityRule.activity.viewModel.answer = listOf('a', 'b', 'b')
+        onView(withId(R.id.button_b)).perform(click())
+        onView(withId(R.id.button_a)).perform(click())
         onView(withId(R.id.led_3)).check { view, _ ->
             assertColor(view, R.color.orange)
         }
@@ -68,10 +66,9 @@ class MainActivityInstrumentedTest {
 
     @Test
     fun shouldShowSecondIncorrectAsRed() {
-        val viewModel = activityRule.activity.viewModel
-        viewModel.answer = listOf('a', 'a', 'a')
-        viewModel.guess('c')
-        viewModel.guess('c')
+        activityRule.activity.viewModel.answer = listOf('a', 'a', 'a')
+        onView(withId(R.id.button_c)).perform(click())
+        onView(withId(R.id.button_c)).perform(click())
         onView(withId(R.id.led_2)).check { view, _ ->
             assertColor(view, R.color.red)
         }
